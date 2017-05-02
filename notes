@@ -1,0 +1,13 @@
+Ogame:
+
+Login: 
+POST
+	https://de.ogame.gameforge.com/main/login
+FORM DATA
+	kid:
+	login:xxxxxxx
+	pass:xxxxxx
+	uni:s144-de.ogame.gameforge.com
+
+look for "Location" in response Header -> next url (GET)
+	Response Header with Set-Cookies....
