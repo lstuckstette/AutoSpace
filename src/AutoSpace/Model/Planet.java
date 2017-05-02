@@ -24,9 +24,9 @@ public class Planet {
 			fleet.add(new Ship(name, count,type));
 	}
 
-	public int getShipCount(String name) {
+	public int getShipCount(ShipType type) {
 		for (Ship s : fleet) {
-			if (s.getName().equals(name)) {
+			if (s.getShipType() == type) {
 				return s.getCount();
 			}
 		}

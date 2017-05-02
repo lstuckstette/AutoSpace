@@ -26,11 +26,13 @@ import org.jsoup.select.Elements;
 import AutoSpace.Model.Account;
 import AutoSpace.Model.Planet;
 import AutoSpace.Model.Ship;
+import AutoSpace.Types.ShipType;
 
 public class FleetManager {
 
 	private Account account;
 	private static final Logger LOG = Logger.getLogger(FleetManager.class.getName());
+	private static final int CONSUMPTION = 500;
 
 	public FleetManager(Account account) {
 		this.account = account;
@@ -94,7 +96,25 @@ public class FleetManager {
 		String targetSystem = String.valueOf(target.getCoordinate().getSystem());
 		String targetPosition = String.valueOf(target.getCoordinate().getPosition());
 
-		String transporterCount = String.valueOf(((metal + crystal + deuterium) / 25000) + 1);
+		// calculate required GT' count ; handle too little GTs
+		String transporterCount = "";
+		int requiredGTs = ((metal + crystal + deuterium) / 25000) + 1;
+		int presentGTs = source.getShipCount(ShipType.LARGE_CARGO_SHIP);
+		if (presentGTs < requiredGTs) {
+			// if to little large cargos -> reduce Resources
+			transporterCount = String.valueOf(presentGTs);
+			int maxSpace = presentGTs * 25000 - CONSUMPTION;
+			deuterium = maxSpace < source.getDeuterium() ? maxSpace : source.getDeuterium();
+			maxSpace -= deuterium;
+			crystal = maxSpace < source.getCrystal() ? maxSpace : source.getCrystal();
+			maxSpace -= crystal;
+			metal = maxSpace;
+
+		} else {
+			// all fine
+			transporterCount = String.valueOf(requiredGTs);
+		}
+		// <--
 
 		// switch to desired Planet
 		String query0 = "/game/index.php?page=overview&cp=" + source.getPlanetId();
