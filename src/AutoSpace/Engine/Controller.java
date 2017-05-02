@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import AutoSpace.Model.Account;
-import AutoSpace.Types.ResourceBuildingType;
 
 public class Controller {
 

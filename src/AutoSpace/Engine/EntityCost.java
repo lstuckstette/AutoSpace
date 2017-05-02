@@ -166,11 +166,35 @@ public final class EntityCost {
 			return new Resource();
 		}
 	}
-	
-	public int getProductionTime(Resource cost, int levelRoboticFactory, int levelNaniteFactory){
-		
-		//http://owiki.de/index.php/Bauzeit
-		
-		return 0;
+
+	public static int getBuildingBuildTime(Resource cost, int levelRoboticFactory, int levelNaniteFactory,
+			int levelBuilding, int unispeed) {
+
+		double seconds = (cost.getMetal() + cost.getCrystal()) * 1.44 / Math.max(4 - (levelBuilding / 2), 1)
+				/ (1 + levelRoboticFactory) / Math.pow(2, levelNaniteFactory) / unispeed;
+
+		return (int) Math.round(seconds);
+	}
+
+	public static int getResearchDuration(Resource cost, int levelResearchLab) {
+
+		float timeDecimal = (cost.getMetal() + cost.getCrystal()) / (1000 * (1 + levelResearchLab));
+
+		int hours = (int) timeDecimal;
+		int minutes = (int) (timeDecimal * 60) % 60;
+		int seconds = (int) (timeDecimal * (60 * 60)) % 60;
+		int totalseconds = hours * 60 * 60 + minutes * 60 + seconds;
+		return totalseconds;
+	}
+
+	public static int getShipBuildTime(Resource cost, int levelShipyard, int levelNaniteFactory) {
+		double timeDecimal = (cost.getMetal() + cost.getCrystal())
+				/ (2500 * (1 + levelShipyard) * Math.pow(2, levelNaniteFactory));
+
+		int hours = (int) timeDecimal;
+		int minutes = (int) (timeDecimal * 60) % 60;
+		int seconds = (int) (timeDecimal * (60 * 60)) % 60;
+		int totalseconds = hours * 60 * 60 + minutes * 60 + seconds;
+		return totalseconds;
 	}
 }
