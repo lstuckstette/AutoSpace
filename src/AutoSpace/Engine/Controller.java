@@ -71,7 +71,7 @@ public class Controller {
 		// ShipType.ESPIONAGE_PROBE, 1);
 		
 		BuildScheduler bs = new BuildScheduler(account);
-		bs.scheduleBuildResourceBuilding(account.getPlanet("Pentos"), ResourceBuildingType.FUSIONREACTOR, 10);
+		//bs.scheduleBuildResourceBuilding(account.getPlanet("Pentos"), ResourceBuildingType.FUSIONREACTOR, 10);
 		bs.shutdownBuildScheduler();
 
 		System.out.println("Done.");

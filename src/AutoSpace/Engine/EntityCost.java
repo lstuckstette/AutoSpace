@@ -166,4 +166,11 @@ public final class EntityCost {
 			return new Resource();
 		}
 	}
+	
+	public int getProductionTime(Resource cost, int levelRoboticFactory, int levelNaniteFactory){
+		
+		//http://owiki.de/index.php/Bauzeit
+		
+		return 0;
+	}
 }
