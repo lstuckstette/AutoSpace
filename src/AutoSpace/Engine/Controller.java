@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import AutoSpace.Model.Account;
+import AutoSpace.Types.ResourceBuildingType;
 
 public class Controller {
 
@@ -32,7 +33,7 @@ public class Controller {
 		System.out.println(account.toString());
 
 		// Example: Send attack
-		FleetManager fleet = new FleetManager(account);
+		// FleetManager fleet = new FleetManager(account);
 		// Planet target = new Planet();
 		// target.setCoordinate("4:194:6");
 		// ArrayList<Ship> attackFleet = new ArrayList<Ship>();
@@ -45,7 +46,7 @@ public class Controller {
 		// fleet.sendTransport(account.getPlanet("Volantis"),
 		// account.getPlanet("Pentos"), 15000, 4000, 2500);
 
-		fleet.gatherResources(account.getPlanet("Volantis"));
+		//fleet.gatherResources(account.getPlanet("Volantis"));
 
 		// GalaxyView gv = new GalaxyView(account);
 		// ArrayList<Planet> inactivePlanets =
@@ -68,6 +69,10 @@ public class Controller {
 
 		// builder.buildShip(account.getPlanet("Volantis"),
 		// ShipType.ESPIONAGE_PROBE, 1);
+		
+		BuildScheduler bs = new BuildScheduler(account);
+		bs.scheduleBuildResourceBuilding(account.getPlanet("Pentos"), ResourceBuildingType.FUSIONREACTOR, 10);
+		bs.shutdownBuildScheduler();
 
 		System.out.println("Done.");
 	}

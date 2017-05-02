@@ -18,8 +18,17 @@ public class Account {
 	}
 
 	public String toString() {
-		return "##########\nAccountinfo\n\nUniverse: " + this.universe
-				+ "\nPlanetcount: " + planeten.size() + "\n##########";
+		int totalMetal = 0;
+		int totalCrystal = 0;
+		int totalDeuterium = 0;
+		for (Planet p : planeten) {
+			totalMetal += p.getMetal();
+			totalCrystal += p.getCrystal();
+			totalDeuterium += p.getDeuterium();
+		}
+		return "##########\nAccountinfo\nUniverse: " + this.universe + "\nPlanetcount: " + planeten.size()
+				+ "\nTotal Resources\nMetal: " + totalMetal + "\nCrystal: " + totalCrystal + "\nDeuterium: "
+				+ totalDeuterium + "\n##########";
 	}
 
 	public void addPlanet(Planet pnew) {
