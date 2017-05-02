@@ -10,14 +10,15 @@ import AutoSpace.Model.Account;
 public class Controller {
 
 	public Controller() {
-		
-		//Read Config File:
+
+		// Read Config File:
 		Properties config = readProperties();
-		
+
 		// create account
 		Account account = new Account(config.getProperty("universe"));
 		// login account
-		Authentification auth = new Authentification(account, config.getProperty("username"), config.getProperty("password"));
+		Authentification auth = new Authentification(account, config.getProperty("username"),
+				config.getProperty("password"));
 		auth.login();
 
 		if (!auth.wasSuccessful()) {
@@ -27,24 +28,24 @@ public class Controller {
 		// gather information
 		Extractor extractor = new Extractor(account);
 		extractor.gatherInformation();
-		
+
 		System.out.println(account.toString());
-		
-		//Example: Send attack
-//		FleetManager fleet = new FleetManager(account);
-//		Planet target = new Planet();
-//		target.setCoordinate("4:194:6");
-//		ArrayList<Ship> attackFleet = new ArrayList<Ship>();
-//		attackFleet.add(new Ship(1, ShipType.LARGE_CARGO_SHIP));
-//		
-//		fleet.sendAttack(account.getPlanet("Pentos"), target, attackFleet);
+
+		// Example: Send attack
+		FleetManager fleet = new FleetManager(account);
+		// Planet target = new Planet();
+		// target.setCoordinate("4:194:6");
+		// ArrayList<Ship> attackFleet = new ArrayList<Ship>();
+		// attackFleet.add(new Ship(1, ShipType.LARGE_CARGO_SHIP));
+		//
+		// fleet.sendAttack(account.getPlanet("Pentos"), target, attackFleet);
 
 		// fleet.sendExpedition(account.getPlanet("Volantis"),1);
-		
+
 		// fleet.sendTransport(account.getPlanet("Volantis"),
 		// account.getPlanet("Pentos"), 15000, 4000, 2500);
-		
-		// fleet.gatherResources(account.getPlanet("Volantis"));
+
+		fleet.gatherResources(account.getPlanet("Volantis"));
 
 		// GalaxyView gv = new GalaxyView(account);
 		// ArrayList<Planet> inactivePlanets =
@@ -54,22 +55,24 @@ public class Controller {
 		// System.out.println(p.getCoordinate().toString()+" -
 		// "+p.getPlanetName());
 		// }
-		
-		//Builder builder = new Builder(account);
-		//builder.buildResourceBuilding(account.getPlanet("Bravos"), ResourceBuildingType.SOLARPLANT);
-		
+
+		// Builder builder = new Builder(account);
+		// builder.buildResourceBuilding(account.getPlanet("Bravos"),
+		// ResourceBuildingType.SOLARPLANT);
+
 		// builder.buildFacilityBuilding(account.getPlanet("Bravos"),
 		// FacilityBuildingType.ROBOTICFACTORY);
-		
+
 		// builder.startResearch(account.getPlanet("Volantis"),
 		// ResearchType.WEAPON_TECHNOLOGY);
-		
-		//builder.buildShip(account.getPlanet("Volantis"), ShipType.ESPIONAGE_PROBE, 1);
+
+		// builder.buildShip(account.getPlanet("Volantis"),
+		// ShipType.ESPIONAGE_PROBE, 1);
 
 		System.out.println("Done.");
 	}
-	
-	private Properties readProperties(){
+
+	private Properties readProperties() {
 		Properties config = new Properties();
 		try {
 			config.load(new FileInputStream("config.cfg"));

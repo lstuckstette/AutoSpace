@@ -113,11 +113,12 @@ public class FleetManager {
 		} else {
 			// all fine
 			transporterCount = String.valueOf(requiredGTs);
+			deuterium -= CONSUMPTION;
 		}
 		// <--
 
 		// switch to desired Planet
-		String query0 = "/game/index.php?page=overview&cp=" + source.getPlanetId();
+		String query0 = "/game/index.php?page=fleet1&cp=" + source.getPlanetId();
 		getPageHTML(query0);
 		// Choose Ship
 		String query1 = "/game/index.php?page=fleet2&galaxy=" + startGalaxy + "&system=" + startSystem + "&position="
@@ -152,7 +153,7 @@ public class FleetManager {
 	public void gatherResources(Planet target) {
 		for (Planet p : account.getPlanets()) {
 			if (!p.equals(target)) {
-				sendTransport(p, target, p.getMetal() - 500, p.getCrystal() - 500, p.getDeuterium() - 500);
+				sendTransport(p, target, p.getMetal(), p.getCrystal(), p.getDeuterium());
 			}
 		}
 	}
