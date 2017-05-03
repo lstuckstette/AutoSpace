@@ -23,19 +23,15 @@ import AutoSpace.Model.Account;
 public class Authentification {
 
 	private static final Logger LOG = Logger.getLogger(Authentification.class.getName());
-	private String username;
-	private String password;
 	private Account account;
 	private BasicCookieStore cookieStore;
 
-	public Authentification(Account account,String username, String password) {
+	public Authentification(Account account) {
 		// System.out.println("HW!");
-		this.username = username;
-		this.password = password;
+
 		this.account = account;
 		this.cookieStore = account.getAuthentification();
-		
-		
+
 	}
 
 	public void login() {
@@ -53,8 +49,8 @@ public class Authentification {
 			}
 
 			HttpUriRequest login = RequestBuilder.post().setUri(new URI("https://de.ogame.gameforge.com/main/login"))
-					.addParameter("kid", "").addParameter("login", this.username).addParameter("pass", this.password)
-					.addParameter("uni", account.getUniverse()).build();
+					.addParameter("kid", "").addParameter("login", account.getUsername())
+					.addParameter("pass", account.getPassword()).addParameter("uni", account.getUniverse()).build();
 			CloseableHttpResponse response2 = httpclient.execute(login);
 			try {
 				HttpEntity entity = response2.getEntity();
@@ -93,8 +89,6 @@ public class Authentification {
 		}
 		account.setAuthentification(cookieStore);
 	}
-
-
 
 	public boolean wasSuccessful() {
 		if (cookieStore.getCookies().size() < 4)

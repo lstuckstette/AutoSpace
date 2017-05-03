@@ -40,6 +40,15 @@ public class Extractor {
 		this.account = account;
 	}
 
+	public void updateInformation() {
+		// Purge Planets;
+		account.getPlanets().clear();
+		// Purge Research
+		account.getResearchList().clear();
+		// Get new Information
+		gatherInformation();
+	}
+
 	public void gatherInformation() {
 		// Get Planet IDs
 		String generalOverviewHTML = getPageHTML("/game/index.php?page=overview");

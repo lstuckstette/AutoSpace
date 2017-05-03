@@ -10,15 +10,20 @@ public class Account {
 
 	private ArrayList<Planet> planeten;
 	private ArrayList<Research> research;
-	private String playername;
 	private String universe;
+	private String username = "";
+	private String password = "";
 	private BasicCookieStore authentification;
 
-	public Account(String universe) {
+	public Account(String universe, String username, String password) {
+		this.universe = universe;
+		this.username = username;
+		this.password = password;
+		
 		this.planeten = new ArrayList<Planet>();
 		this.research = new ArrayList<>();
 		authentification = new BasicCookieStore();
-		this.universe = universe;
+		
 	}
 
 	public String toString() {
@@ -48,6 +53,10 @@ public class Account {
 		return null;
 	}
 
+	public ArrayList<Research> getResearchList() {
+		return this.research;
+	}
+
 	public int getResearchLevel(ResearchType type) {
 		Research r = getResearch(type);
 		return r == null ? -1 : r.getLevel();
@@ -74,12 +83,20 @@ public class Account {
 		return universe;
 	}
 
-	public String getPlayername() {
-		return playername;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setPlayername(String playername) {
-		this.playername = playername;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setAuthentification(BasicCookieStore authentification) {

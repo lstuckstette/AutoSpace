@@ -15,10 +15,9 @@ public class Controller {
 		Properties config = readProperties();
 
 		// create account
-		Account account = new Account(config.getProperty("universe"));
+		Account account = new Account(config.getProperty("universe"),config.getProperty("username"),config.getProperty("password"));
 		// login account
-		Authentification auth = new Authentification(account, config.getProperty("username"),
-				config.getProperty("password"));
+		Authentification auth = new Authentification(account);
 		auth.login();
 
 		if (!auth.wasSuccessful()) {
@@ -32,7 +31,7 @@ public class Controller {
 		System.out.println(account.toString());
 
 		// Example: Send attack
-		// FleetManager fleet = new FleetManager(account);
+		 FleetManager fleet = new FleetManager(account);
 		// Planet target = new Planet();
 		// target.setCoordinate("4:194:6");
 		// ArrayList<Ship> attackFleet = new ArrayList<Ship>();
@@ -45,7 +44,7 @@ public class Controller {
 		// fleet.sendTransport(account.getPlanet("Volantis"),
 		// account.getPlanet("Pentos"), 15000, 4000, 2500);
 
-		// fleet.gatherResources(account.getPlanet("Volantis"));
+		 fleet.gatherResources(account.getPlanet("Volantis"));
 
 		// GalaxyView gv = new GalaxyView(account);
 		// ArrayList<Planet> inactivePlanets =
