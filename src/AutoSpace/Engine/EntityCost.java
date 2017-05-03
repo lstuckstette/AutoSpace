@@ -167,7 +167,7 @@ public final class EntityCost {
 		}
 	}
 
-	public static int getBuildingBuildTime(Resource cost, int levelRoboticFactory, int levelNaniteFactory,
+	public static int getBuildingBuildDuration(Resource cost, int levelRoboticFactory, int levelNaniteFactory,
 			int levelBuilding, int unispeed) {
 
 		double seconds = (cost.getMetal() + cost.getCrystal()) * 1.44 / Math.max(4 - (levelBuilding / 2), 1)
@@ -187,7 +187,7 @@ public final class EntityCost {
 		return totalseconds;
 	}
 
-	public static int getShipBuildTime(Resource cost, int levelShipyard, int levelNaniteFactory) {
+	public static int getShipBuildDuration(Resource cost, int levelShipyard, int levelNaniteFactory) {
 		double timeDecimal = (cost.getMetal() + cost.getCrystal())
 				/ (2500 * (1 + levelShipyard) * Math.pow(2, levelNaniteFactory));
 
