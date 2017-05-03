@@ -2,6 +2,8 @@ package AutoSpace.Model;
 
 import java.util.ArrayList;
 
+import AutoSpace.Types.FacilityBuildingType;
+import AutoSpace.Types.ResourceBuildingType;
 import AutoSpace.Types.ShipType;
 
 public class Planet {
@@ -10,6 +12,8 @@ public class Planet {
 	private String planetName;
 	private Coordinate coordinate;
 	private ArrayList<Ship> fleet;
+	private ArrayList<FacilityBuilding> facilityBuildings;
+	private ArrayList<ResourceBuilding> resourceBuildings;
 	private int resource_metal;
 	private int resource_crystal;
 	private int resource_deuterium;
@@ -17,11 +21,57 @@ public class Planet {
 
 	public Planet() {
 		this.fleet = new ArrayList<Ship>();
+		this.facilityBuildings = new ArrayList<>();
+		this.resourceBuildings = new ArrayList<>();
+	}
+
+	public void addResourceBuilding(ResourceBuilding building) {
+		resourceBuildings.add(building);
+	}
+
+	public ResourceBuilding getResourceBuilding(ResourceBuildingType type) {
+		for (ResourceBuilding rb : resourceBuildings) {
+			if (rb.getType() == type) {
+				return rb;
+			}
+		}
+		return null;
+	}
+
+	public int getResourceBuildingLevel(ResourceBuildingType type) {
+		ResourceBuilding rb = getResourceBuilding(type);
+		if (rb != null) {
+			return rb.getLevel();
+		} else {
+			return -1;
+		}
+	}
+
+	public void addFacilityBuilding(FacilityBuilding building) {
+		facilityBuildings.add(building);
+	}
+
+	public FacilityBuilding getFacilityBuilding(FacilityBuildingType type) {
+		for (FacilityBuilding fb : facilityBuildings) {
+			if (fb.getType() == type) {
+				return fb;
+			}
+		}
+		return null;
+	}
+
+	public int getFacilityBuildingLevel(FacilityBuildingType type) {
+		FacilityBuilding fb = getFacilityBuilding(type);
+		if (fb != null) {
+			return fb.getLevel();
+		} else {
+			return -1;
+		}
 	}
 
 	public void addShip(String name, int count, ShipType type) {
 		if (count > 0)
-			fleet.add(new Ship(name, count,type));
+			fleet.add(new Ship(name, count, type));
 	}
 
 	public int getShipCount(ShipType type) {
@@ -32,8 +82,8 @@ public class Planet {
 		}
 		return 0;
 	}
-	
-	public boolean equals(Planet p2){
+
+	public boolean equals(Planet p2) {
 		return this.planetId.equals(p2.getPlanetId());
 	}
 
@@ -111,5 +161,5 @@ public class Planet {
 	public void setPlanetId(String planetId) {
 		this.planetId = planetId;
 	}
-	
+
 }

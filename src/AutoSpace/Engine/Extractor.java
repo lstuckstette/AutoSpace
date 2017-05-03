@@ -20,7 +20,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import AutoSpace.Model.Account;
+import AutoSpace.Model.FacilityBuilding;
 import AutoSpace.Model.Planet;
+import AutoSpace.Model.ResourceBuilding;
+import AutoSpace.Types.FacilityBuildingType;
+import AutoSpace.Types.ResourceBuildingType;
 import AutoSpace.Types.ShipType;
 
 public class Extractor {
@@ -44,8 +48,12 @@ public class Extractor {
 			Planet p = new Planet();
 			String planetOverviewHTML = getPageHTML("/game/index.php?page=overview&cp=" + planetid);
 			String fleetHTML = getPageHTML("/game/index.php?page=fleet1&cp=" + planetid);
+			String resourceHTML = getPageHTML("/game/index.php?page=resources&cp=" + planetid);
+			String facilityHTML = getPageHTML("/game/index.php?page=station&cp=" + planetid);
 			parsePlanetOverview(planetOverviewHTML, p);
 			parseFleet(fleetHTML, p);
+			parseResourceBuildings(resourceHTML, p);
+			parseFacilityBuildings(facilityHTML, p);
 			account.addPlanet(p);
 			LOG.fine(p.toString());
 		}
@@ -178,5 +186,29 @@ public class Extractor {
 		Elements parent = shipChild.parents();
 		String count = parent.first().ownText();
 		return Integer.parseInt(count);
+	}
+
+	private void parseResourceBuildings(String html, Planet planet) {
+		Document doc = Jsoup.parse(html);
+		for (ResourceBuildingType type : ResourceBuildingType.values()) {
+			Elements surroundingAnchor = doc.select("a[ref=" + type.id() + "]");
+			if (surroundingAnchor.size() > 0) {
+				Elements levelSpan = surroundingAnchor.select("span.level");
+				String level = levelSpan.first().ownText();
+				planet.addResourceBuilding(new ResourceBuilding(type, Integer.valueOf(level)));
+			}
+		}
+	}
+
+	private void parseFacilityBuildings(String html, Planet planet) {
+		Document doc = Jsoup.parse(html);
+		for (FacilityBuildingType type : FacilityBuildingType.values()) {
+			Elements surroundingAnchor = doc.select("a[ref=" + type.id() + "]");
+			if (surroundingAnchor.size() > 0) {
+				Elements levelSpan = surroundingAnchor.select("span.level");
+				String level = levelSpan.first().ownText();
+				planet.addFacilityBuilding(new FacilityBuilding(type, Integer.valueOf(level)));
+			}
+		}
 	}
 }

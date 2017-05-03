@@ -30,6 +30,8 @@ public class Controller {
 		extractor.gatherInformation();
 
 		System.out.println(account.toString());
+		
+		
 
 		// Example: Send attack
 		// FleetManager fleet = new FleetManager(account);
@@ -69,9 +71,9 @@ public class Controller {
 		// builder.buildShip(account.getPlanet("Volantis"),
 		// ShipType.ESPIONAGE_PROBE, 1);
 		
-		BuildScheduler bs = new BuildScheduler(account);
+		//BuildScheduler bs = new BuildScheduler(account);
 		//bs.scheduleBuildResourceBuilding(account.getPlanet("Pentos"), ResourceBuildingType.FUSIONREACTOR, 10);
-		bs.shutdownBuildScheduler();
+		//bs.shutdownBuildScheduler();
 
 		System.out.println("Done.");
 	}
