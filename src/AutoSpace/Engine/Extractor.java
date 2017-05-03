@@ -22,8 +22,10 @@ import org.jsoup.select.Elements;
 import AutoSpace.Model.Account;
 import AutoSpace.Model.FacilityBuilding;
 import AutoSpace.Model.Planet;
+import AutoSpace.Model.Research;
 import AutoSpace.Model.ResourceBuilding;
 import AutoSpace.Types.FacilityBuildingType;
+import AutoSpace.Types.ResearchType;
 import AutoSpace.Types.ResourceBuildingType;
 import AutoSpace.Types.ShipType;
 
@@ -42,8 +44,10 @@ public class Extractor {
 		// Get Planet IDs
 		String generalOverviewHTML = getPageHTML("/game/index.php?page=overview");
 		ArrayList<String> planetids = getPlanetIds(generalOverviewHTML);
-		// Loop through IDs and gather information
 
+		String researchHTML = getPageHTML("/game/index.php?page=research");
+		parseResearch(researchHTML, account);
+		// Loop through IDs and gather information
 		for (String planetid : planetids) {
 			Planet p = new Planet();
 			String planetOverviewHTML = getPageHTML("/game/index.php?page=overview&cp=" + planetid);
@@ -195,7 +199,7 @@ public class Extractor {
 			if (surroundingAnchor.size() > 0) {
 				Elements levelSpan = surroundingAnchor.select("span.level");
 				String level = levelSpan.first().ownText();
-				planet.addResourceBuilding(new ResourceBuilding(type, Integer.valueOf(level)));
+				planet.addResourceBuilding(new ResourceBuilding(type, Integer.parseInt(level)));
 			}
 		}
 	}
@@ -207,7 +211,19 @@ public class Extractor {
 			if (surroundingAnchor.size() > 0) {
 				Elements levelSpan = surroundingAnchor.select("span.level");
 				String level = levelSpan.first().ownText();
-				planet.addFacilityBuilding(new FacilityBuilding(type, Integer.valueOf(level)));
+				planet.addFacilityBuilding(new FacilityBuilding(type, Integer.parseInt(level)));
+			}
+		}
+	}
+
+	private void parseResearch(String html, Account account) {
+		Document doc = Jsoup.parse(html);
+		for (ResearchType type : ResearchType.values()) {
+			Elements surroundingAnchor = doc.select("a[ref=" + type.id() + "]");
+			if (surroundingAnchor.size() > 0) {
+				Elements levelSpan = surroundingAnchor.select("span.level");
+				String level = levelSpan.first().ownText();
+				account.addResearch(new Research(type, Integer.parseInt(level)));
 			}
 		}
 	}
