@@ -15,7 +15,8 @@ public class Controller {
 		Properties config = readProperties();
 
 		// create account
-		Account account = new Account(config.getProperty("universe"),config.getProperty("username"),config.getProperty("password"));
+		Account account = new Account(config.getProperty("universe"), config.getProperty("username"),
+				config.getProperty("password"));
 		// login account
 		Authentification auth = new Authentification(account);
 		auth.login();
@@ -24,14 +25,15 @@ public class Controller {
 			System.err.println("UNABLE TO LOGIN. CHECK ENTERED DATA. ABORTING.");
 			System.exit(0);
 		}
-		// gather information
+		// gather Planet/Fleet/Building/Research information
 		Extractor extractor = new Extractor(account);
 		extractor.gatherInformation();
 
 		System.out.println(account.toString());
 
 		// Example: Send attack
-		 FleetManager fleet = new FleetManager(account);
+		// FleetManager fleet = new FleetManager(account);
+		// System.out.println(fleet.isUnderAttack());
 		// Planet target = new Planet();
 		// target.setCoordinate("4:194:6");
 		// ArrayList<Ship> attackFleet = new ArrayList<Ship>();
@@ -44,7 +46,7 @@ public class Controller {
 		// fleet.sendTransport(account.getPlanet("Volantis"),
 		// account.getPlanet("Pentos"), 15000, 4000, 2500);
 
-		 fleet.gatherResources(account.getPlanet("Volantis"));
+		// fleet.gatherResources(account.getPlanet("Volantis"));
 
 		// GalaxyView gv = new GalaxyView(account);
 		// ArrayList<Planet> inactivePlanets =
@@ -68,10 +70,10 @@ public class Controller {
 		// builder.buildShip(account.getPlanet("Volantis"),
 		// ShipType.ESPIONAGE_PROBE, 1);
 
-		// BuildScheduler bs = new BuildScheduler(account);
-		// bs.scheduleBuildResourceBuilding(account.getPlanet("Pentos"),
+		// TaskScheduler ts = new TaskScheduler(account);
+		// ts.scheduleBuildResourceBuilding(account.getPlanet("Pentos"),
 		// ResourceBuildingType.FUSIONREACTOR, 10);
-		// bs.shutdownBuildScheduler();
+		// ts.shutdownBuildScheduler();
 
 		System.out.println("Done.");
 	}

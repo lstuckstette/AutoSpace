@@ -86,7 +86,7 @@ public class FleetManager {
 
 	}
 
-	public void sendTransport(Planet source, Planet target, int metal, int crystal, int deuterium) {
+	public void sendTransport(Planet source, Planet target, int speed, int metal, int crystal, int deuterium) {
 
 		String startGalaxy = String.valueOf(source.getCoordinate().getGalaxy());
 		String startSystem = String.valueOf(source.getCoordinate().getSystem());
@@ -95,6 +95,9 @@ public class FleetManager {
 		String targetGalaxy = String.valueOf(target.getCoordinate().getGalaxy());
 		String targetSystem = String.valueOf(target.getCoordinate().getSystem());
 		String targetPosition = String.valueOf(target.getCoordinate().getPosition());
+
+		// check speed in bounds
+		speed = speed < 1 || speed > 10 ? 10 : speed;
 
 		// calculate required GT' count ; handle too little GTs
 		String transporterCount = "";
@@ -122,11 +125,12 @@ public class FleetManager {
 		getPageHTML(query0);
 		// Choose Ship
 		String query1 = "/game/index.php?page=fleet2&galaxy=" + startGalaxy + "&system=" + startSystem + "&position="
-				+ startPosition + "&type=1&mission=0&speed=10&am203=" + transporterCount;
+				+ startPosition + "&type=1&mission=0&speed=" + String.valueOf(speed) + "&am203=" + transporterCount;
 		getPageHTML(query1);
 		// Briefing
 		String query3 = "/game/index.php?page=fleet3&type=1&mission=0&union=0&am203=" + transporterCount + "&galaxy="
-				+ targetGalaxy + "&system=" + targetSystem + "&position=" + targetPosition + "&acsValues=-&speed=10";
+				+ targetGalaxy + "&system=" + targetSystem + "&position=" + targetPosition + "&acsValues=-&speed="
+				+ String.valueOf(speed);
 		String q3HTML = getPageHTML(query3);
 		// Start flight
 		String token = extractToken(q3HTML);
@@ -137,10 +141,11 @@ public class FleetManager {
 					.addParameter("holdingtime", "1").addParameter("expeditiontime", "1").addParameter("token", token)
 					.addParameter("galaxy", targetGalaxy).addParameter("system", targetSystem)
 					.addParameter("position", targetPosition).addParameter("type", "1").addParameter("mission", "3")
-					.addParameter("union2", "0").addParameter("holdingOrExpTime", "0").addParameter("speed", "10")
-					.addParameter("acsValues", "-").addParameter("prioMetal", "1").addParameter("prioCrystal", "2")
-					.addParameter("prioDeuterium", "3").addParameter("am203", transporterCount)
-					.addParameter("metal", String.valueOf(metal)).addParameter("crystal", String.valueOf(crystal))
+					.addParameter("union2", "0").addParameter("holdingOrExpTime", "0")
+					.addParameter("speed", String.valueOf(speed)).addParameter("acsValues", "-")
+					.addParameter("prioMetal", "1").addParameter("prioCrystal", "2").addParameter("prioDeuterium", "3")
+					.addParameter("am203", transporterCount).addParameter("metal", String.valueOf(metal))
+					.addParameter("crystal", String.valueOf(crystal))
 					.addParameter("deuterium", String.valueOf(deuterium)).build();
 			postData(request);
 		} catch (URISyntaxException e) {
@@ -153,7 +158,7 @@ public class FleetManager {
 	public void gatherResources(Planet target) {
 		for (Planet p : account.getPlanets()) {
 			if (!p.equals(target)) {
-				sendTransport(p, target, p.getMetal(), p.getCrystal(), p.getDeuterium());
+				sendTransport(p, target,10, p.getMetal(), p.getCrystal(), p.getDeuterium());
 			}
 		}
 	}
@@ -225,6 +230,20 @@ public class FleetManager {
 			return tokenNode.first().attr("value");
 		}
 		return "";
+	}
+
+	public boolean isUnderAttack() {
+
+		String overviewHTML = getPageHTML("/game/index.php?page=overview");
+		Document doc = Jsoup.parse(overviewHTML);
+		Elements attackNode = doc.select("div.tooltip.eventToggle.soon");
+		if (attackNode.size() > 0) {
+			return true;
+		} else if (doc.select("div.tooltip.eventToggle.noAttack").size() > 0) {
+			return false;
+		}
+		System.err.println("FleetManager.isUnderAttack() - UNKNOWN ATTACK STATE!");
+		return true;
 	}
 
 	private void postData(HttpUriRequest request) {
@@ -305,4 +324,5 @@ public class FleetManager {
 		}
 		return result.toString();
 	}
+
 }
