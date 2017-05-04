@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import AutoSpace.Model.Account;
+import AutoSpace.Types.ResourceBuildingType;
 
 public class Controller {
 
@@ -30,7 +31,13 @@ public class Controller {
 		extractor.gatherInformation();
 
 		System.out.println(account.toString());
-
+		
+		//time until solarplant upgrade possible, you could add it to the TaskScheduler with that delay.
+		System.out.println(EntityCost.getSecondsUntilBuildPossible(account, account.getPlanet("Volantis"),
+				EntityCost.getResourceBuildingCost(ResourceBuildingType.SOLARPLANT,
+						account.getPlanet("Volantis").getResourceBuildingLevel(ResourceBuildingType.SOLARPLANT)+1)));
+		
+		
 		// Example: Send attack
 		// FleetManager fleet = new FleetManager(account);
 		// System.out.println(fleet.isUnderAttack());
@@ -38,7 +45,6 @@ public class Controller {
 		// target.setCoordinate("4:194:6");
 		// ArrayList<Ship> attackFleet = new ArrayList<Ship>();
 		// attackFleet.add(new Ship(1, ShipType.LARGE_CARGO_SHIP));
-		//
 		// fleet.sendAttack(account.getPlanet("Pentos"), target, attackFleet);
 
 		// fleet.sendExpedition(account.getPlanet("Volantis"),1);

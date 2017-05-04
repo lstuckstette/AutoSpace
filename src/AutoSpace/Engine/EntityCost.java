@@ -1,5 +1,7 @@
 package AutoSpace.Engine;
 
+import AutoSpace.Model.Account;
+import AutoSpace.Model.Planet;
 import AutoSpace.Model.Resource;
 import AutoSpace.Types.DefenseType;
 import AutoSpace.Types.FacilityBuildingType;
@@ -191,6 +193,122 @@ public final class EntityCost {
 		double timeDecimal = (cost.getMetal() + cost.getCrystal())
 				/ (2500 * (1 + levelShipyard) * Math.pow(2, levelNaniteFactory));
 
+		int hours = (int) timeDecimal;
+		int minutes = (int) (timeDecimal * 60) % 60;
+		int seconds = (int) (timeDecimal * (60 * 60)) % 60;
+		int totalseconds = hours * 60 * 60 + minutes * 60 + seconds;
+		return totalseconds;
+	}
+
+	public static int getCrystalProductionPerHour(Account acc, Planet p) {
+		int levelCM = p.getResourceBuildingLevel(ResourceBuildingType.CRYSTALMINE);
+		int levelPT = acc.getResearchLevel(ResearchType.PLASMA_TECHNOLOGY);
+		int grundProd = 15;
+		double prod = (20 * levelCM * Math.pow(1.1, levelCM)) + grundProd * ((100 + 0.66 * levelPT) / 100);
+		return (int) prod;
+	}
+
+	public static int getMetalProductionPerHour(Account acc, Planet p) {
+		int levelMM = p.getResourceBuildingLevel(ResourceBuildingType.METALMINE);
+		int levelPT = acc.getResearchLevel(ResearchType.PLASMA_TECHNOLOGY);
+		int grundProd = 30;
+		double prod = (30 * levelMM * Math.pow(1.1, levelMM)) + grundProd * ((100 + levelPT) / 100);
+		return (int) prod;
+	}
+
+	// worst-case;
+	public static int getDeuteriumProductionPerHour(Planet p) {
+		int levelDM = p.getResourceBuildingLevel(ResourceBuildingType.DEUTERIUMSYNTHESIZER);
+		int levelFR = p.getResourceBuildingLevel(ResourceBuildingType.FUSIONREACTOR);
+		int position = p.getCoordinate().getPosition();
+		double fusionConsumption = 10 * levelFR * Math.pow(1.1, levelFR);
+		int highTemp;
+		switch (position) {
+		case 1:
+			highTemp = 260;
+			break;
+		case 2:
+			highTemp = 210;
+			break;
+		case 3:
+			highTemp = 160;
+			break;
+		case 4:
+			highTemp = 110;
+			break;
+		case 5:
+			highTemp = 100;
+			break;
+		case 6:
+			highTemp = 90;
+			break;
+		case 7:
+			highTemp = 80;
+			break;
+		case 8:
+			highTemp = 70;
+			break;
+		case 9:
+			highTemp = 60;
+			break;
+		case 10:
+			highTemp = 50;
+			break;
+		case 11:
+			highTemp = 40;
+			break;
+		case 12:
+			highTemp = 30;
+			break;
+		case 13:
+			highTemp = -10;
+			break;
+		case 14:
+			highTemp = -50;
+			break;
+		case 15:
+			highTemp = -90;
+			break;
+		default:
+			highTemp = 0;
+		}
+
+		double prod = 10 * levelDM * Math.pow(1.1, levelDM) * (1.44 - 0.004 * highTemp);
+		return (int) (prod - fusionConsumption);
+	}
+
+	public static int getBuildingEnergyCost(ResourceBuildingType type, int level) {
+		switch (type) {
+		case METALMINE:
+			return (int) (10 * level * Math.pow(1.1, level));
+		case CRYSTALMINE:
+			return (int) (10 * level * Math.pow(1.1, level));
+		case DEUTERIUMSYNTHESIZER:
+			return (int) (20 * level * Math.pow(1.1, level));
+		default:
+			return 0;
+		}
+	}
+
+	public static int getSecondsUntilBuildPossible(Account acc, Planet p, Resource cost) {
+
+		int currentMetal = p.getMetal();
+		int currentCrystal = p.getCrystal();
+		int currentDeut = p.getDeuterium();
+
+		double metalTimeHours = (cost.getMetal() - currentMetal) / getMetalProductionPerHour(acc, p);
+		int metalTimeSeconds = decimalHoursToSeconds(metalTimeHours);
+
+		double crystalTimeHours = (cost.getCrystal() - currentCrystal) / getCrystalProductionPerHour(acc, p);
+		int crystalTimeSeconds = decimalHoursToSeconds(crystalTimeHours);
+
+		double deutTimeHours = (cost.getDeuterium() - currentDeut) / getDeuteriumProductionPerHour(p);
+		int deutTimeSeconds = decimalHoursToSeconds(deutTimeHours);
+
+		return Math.max(Math.max(metalTimeSeconds, crystalTimeSeconds), deutTimeSeconds);
+	}
+
+	public static int decimalHoursToSeconds(double timeDecimal) {
 		int hours = (int) timeDecimal;
 		int minutes = (int) (timeDecimal * 60) % 60;
 		int seconds = (int) (timeDecimal * (60 * 60)) % 60;
