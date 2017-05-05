@@ -152,7 +152,7 @@ public class FleetManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	public void gatherResources(Planet target) {

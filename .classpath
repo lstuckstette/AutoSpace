@@ -2,18 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/commons-codec-1.9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/commons-io-2.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/fluent-hc-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/httpclient-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/httpclient-cache-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/httpclient-win-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/httpcore-4.4.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/httpmime-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/jna-4.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/jna-platform-4.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Stuck/workspace/AutoSpace/lib/jsoup-1.10.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Student/workspace/AutoSpace/lib/commons-codec-1.9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Student/workspace/AutoSpace/lib/commons-io-2.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Student/workspace/AutoSpace/lib/commons-logging-1.2.jar"/>
@@ -26,5 +14,8 @@
 	<classpathentry kind="lib" path="C:/Users/Student/workspace/AutoSpace/lib/jna-4.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Student/workspace/AutoSpace/lib/jna-platform-4.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Student/workspace/AutoSpace/lib/jsoup-1.10.2.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail.jar"/>
+	<classpathentry kind="var" path="ECLIPSE_HOME"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

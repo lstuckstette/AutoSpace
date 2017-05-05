@@ -28,14 +28,16 @@ public class Controller {
 		}
 		// gather Planet/Fleet/Building/Research information
 		Extractor extractor = new Extractor(account);
-		extractor.gatherInformation();
+		//extractor.gatherInformation();
 
 		System.out.println(account.toString());
 		
+		EmailNotification apn = new EmailNotification();
+		
 		//time until solarplant upgrade possible, you could add it to the TaskScheduler with that delay.
-		System.out.println(EntityCost.getSecondsUntilBuildPossible(account, account.getPlanet("Volantis"),
-				EntityCost.getResourceBuildingCost(ResourceBuildingType.SOLARPLANT,
-						account.getPlanet("Volantis").getResourceBuildingLevel(ResourceBuildingType.SOLARPLANT)+1)));
+//		System.out.println(EntityCost.getSecondsUntilBuildPossible(account, account.getPlanet("Volantis"),
+//				EntityCost.getResourceBuildingCost(ResourceBuildingType.SOLARPLANT,
+//						account.getPlanet("Volantis").getResourceBuildingLevel(ResourceBuildingType.SOLARPLANT)+1)));
 		
 		
 		// Example: Send attack
