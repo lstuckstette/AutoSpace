@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import AutoSpace.Model.Account;
-import AutoSpace.Types.ResourceBuildingType;
 
 public class Controller {
 
@@ -28,11 +27,11 @@ public class Controller {
 		}
 		// gather Planet/Fleet/Building/Research information
 		Extractor extractor = new Extractor(account);
-		//extractor.gatherInformation();
+		extractor.gatherInformation();
 
 		System.out.println(account.toString());
 		
-		EmailNotification apn = new EmailNotification();
+		new EmailNotification();
 		
 		//time until solarplant upgrade possible, you could add it to the TaskScheduler with that delay.
 //		System.out.println(EntityCost.getSecondsUntilBuildPossible(account, account.getPlanet("Volantis"),
