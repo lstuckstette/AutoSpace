@@ -145,6 +145,7 @@ public class Extractor {
 		String coordinate = doc.select("[name=ogame-planet-coordinates]").first().attr("content");
 		String planetId = doc.select("[name=ogame-planet-id]").first().attr("content");
 
+		energy = energy.replace(".", "");
 		planet.setPlanetId(planetId);
 		planet.setMetal(Integer.parseInt(metal));
 		planet.setCrystal(Integer.parseInt(crystal));

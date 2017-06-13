@@ -46,17 +46,18 @@ public class FleetManager {
 
 		// switch to desired Planet
 		String query0 = "/game/index.php?page=overview&cp=" + planet.getPlanetId();
-		getPageHTML(query0);
+		String html1 =getPageHTML(query0);
 
+		System.out.println("reached! - Size:" +html1.length());
 		// Choose Ship
 		String query1 = "/game/index.php?page=fleet2&galaxy=" + currentGalaxy + "&system=" + currentSystem
 				+ "&position=" + currentPosition + "&type=1&mission=0&speed=10&am203=" + transporterCount;
-		getPageHTML(query1);
+		String html2 =getPageHTML(query1);
 
 		// Fleetcheck -> really needed?
 		String query2 = "/game/index.php?page=fleetcheck&ajax=1&espionage=0" + "&galaxy=" + currentGalaxy + "&system="
 				+ currentSystem + "&planet=16&type=1";
-		getPageHTML(query2);
+		String html3 =getPageHTML(query2);
 
 		// Briefing
 		String query3 = "/game/index.php?page=fleet3&type=1&mission=15&union=0&am203=" + transporterCount + "&galaxy="
@@ -88,6 +89,9 @@ public class FleetManager {
 
 	public void sendTransport(Planet source, Planet target, int speed, int metal, int crystal, int deuterium) {
 
+		
+		
+		
 		String startGalaxy = String.valueOf(source.getCoordinate().getGalaxy());
 		String startSystem = String.valueOf(source.getCoordinate().getSystem());
 		String startPosition = String.valueOf(source.getCoordinate().getPosition());

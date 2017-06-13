@@ -35,8 +35,8 @@ public class Account {
 			totalCrystal += p.getCrystal();
 			totalDeuterium += p.getDeuterium();
 		}
-		return "##########\nAccountinfo\nUniverse: " + this.universe + "\nPlanetcount: " + planeten.size()
-				+ "\nTotal Resources\nMetal: " + totalMetal + "\nCrystal: " + totalCrystal + "\nDeuterium: "
+		return "##########\nACCOUNTINFO\nUniverse: " + this.universe + "\nPlanetcount: " + planeten.size()
+				+ "\nTOTAL RESOURCES\nMetal: " + totalMetal + "\nCrystal: " + totalCrystal + "\nDeuterium: "
 				+ totalDeuterium + "\n##########";
 	}
 

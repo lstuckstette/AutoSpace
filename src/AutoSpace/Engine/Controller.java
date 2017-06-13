@@ -11,6 +11,7 @@ public class Controller {
 
 	public Controller() {
 
+		System.out.println("Starting. Gathering Accountinfo:");
 		// Read Config File:
 		Properties config = readProperties();
 
@@ -30,17 +31,18 @@ public class Controller {
 		extractor.gatherInformation();
 
 		System.out.println(account.toString());
-		
-		new EmailNotification();
-		
-		//time until solarplant upgrade possible, you could add it to the TaskScheduler with that delay.
-//		System.out.println(EntityCost.getSecondsUntilBuildPossible(account, account.getPlanet("Volantis"),
-//				EntityCost.getResourceBuildingCost(ResourceBuildingType.SOLARPLANT,
-//						account.getPlanet("Volantis").getResourceBuildingLevel(ResourceBuildingType.SOLARPLANT)+1)));
-		
-		
+
+		// new EmailNotification();
+
+		// time until solarplant upgrade possible, you could add it to the
+		// TaskScheduler with that delay.
+		// System.out.println(EntityCost.getSecondsUntilBuildPossible(account,
+		// account.getPlanet("Volantis"),
+		// EntityCost.getResourceBuildingCost(ResourceBuildingType.SOLARPLANT,
+		// account.getPlanet("Volantis").getResourceBuildingLevel(ResourceBuildingType.SOLARPLANT)+1)));
+
 		// Example: Send attack
-		// FleetManager fleet = new FleetManager(account);
+		FleetManager fleet = new FleetManager(account);
 		// System.out.println(fleet.isUnderAttack());
 		// Planet target = new Planet();
 		// target.setCoordinate("4:194:6");
@@ -48,12 +50,23 @@ public class Controller {
 		// attackFleet.add(new Ship(1, ShipType.LARGE_CARGO_SHIP));
 		// fleet.sendAttack(account.getPlanet("Pentos"), target, attackFleet);
 
-		// fleet.sendExpedition(account.getPlanet("Volantis"),1);
-
+		
+		 //fleet.sendExpedition(account.getPlanet("Volantis"), 5);
+		 /* fleet.sendTransport(account.getPlanet("Bravos"),
+		 * account.getPlanet("Volantis"), 10,
+		 * account.getPlanet("Bravos").getMetal(),
+		 * account.getPlanet("Bravos").getCrystal(),
+		 * account.getPlanet("Bravos").getDeuterium());
+		 * fleet.sendTransport(account.getPlanet("Pentos"),
+		 * account.getPlanet("Volantis"), 10,
+		 * account.getPlanet("Pentos").getMetal(),
+		 * account.getPlanet("Pentos").getCrystal(),
+		 * account.getPlanet("Pentos").getDeuterium());
+		 */
 		// fleet.sendTransport(account.getPlanet("Volantis"),
 		// account.getPlanet("Pentos"), 15000, 4000, 2500);
 
-		// fleet.gatherResources(account.getPlanet("Volantis"));
+		fleet.gatherResources(account.getPlanet("Volantis"));
 
 		// GalaxyView gv = new GalaxyView(account);
 		// ArrayList<Planet> inactivePlanets =
